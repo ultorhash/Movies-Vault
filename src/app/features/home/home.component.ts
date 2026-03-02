@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatChipsModule, MatChipSelectionChange } from '@angular/material/chips';
 import { Store } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
 import { MoviesActions } from '../../store/movies.actions';
@@ -15,6 +16,8 @@ import {
   selectTotalItems,
   selectPageSize,
   selectPageIndex,
+  selectAvailableGenres,
+  selectSelectedGenre,
 } from '../../store/movies.selectors';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
 import { Movie } from '../../core/models/movie.model';
@@ -29,6 +32,7 @@ import { Movie } from '../../core/models/movie.model';
     MatIconModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatChipsModule,
     FormsModule,
     MovieCardComponent,
   ],
@@ -46,6 +50,18 @@ import { Movie } from '../../core/models/movie.model';
           />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
+
+        <div class="genre-filters" *ngIf="(availableGenres$ | async)?.length">
+          <mat-chip-listbox
+            aria-label="Genre selection"
+            [value]="selectedGenre$ | async"
+            (change)="onGenreChange($event.value)"
+          >
+            <mat-chip-option *ngFor="let genre of availableGenres$ | async" [value]="genre">
+              {{ genre }}
+            </mat-chip-option>
+          </mat-chip-listbox>
+        </div>
       </div>
 
       <div class="loading-spinner" *ngIf="loading$ | async">
@@ -75,12 +91,9 @@ import { Movie } from '../../core/models/movie.model';
         </mat-paginator>
       </div>
 
-      <div
-        class="no-results"
-        *ngIf="!(loading$ | async) && (totalItems$ | async) === 0"
-      >
+      <div class="no-results" *ngIf="!(loading$ | async) && (totalItems$ | async) === 0">
         <mat-icon>search_off</mat-icon>
-        <p>No results found. Try another search!</p>
+        <p>No results found. Try another search or different genre!</p>
       </div>
     </div>
   `,
@@ -95,12 +108,16 @@ import { Movie } from '../../core/models/movie.model';
       .search-header {
         text-align: center;
         margin-bottom: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
       }
 
       h1 {
         font-size: 2.5rem;
         font-weight: 700;
-        margin-bottom: 1.5rem;
+        margin: 0;
         background: linear-gradient(45deg, #fff, #aaa);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -109,6 +126,21 @@ import { Movie } from '../../core/models/movie.model';
       .search-field {
         width: 100%;
         max-width: 600px;
+      }
+
+      .genre-filters {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        overflow-x: auto;
+        padding: 0.5rem 0;
+      }
+
+      .genre-filters mat-chip-listbox {
+        --mdc-chip-elevated-container-color: rgba(255, 255, 255, 0.05);
+        --mdc-chip-label-text-color: var(--text-muted);
+        --mdc-chip-selected-container-color: var(--primary-color);
+        --mdc-chip-selected-label-text-color: #fff;
       }
 
       .movies-grid {
@@ -157,6 +189,8 @@ export class HomeComponent implements OnInit {
   totalItems$ = this.store.select(selectTotalItems);
   pageSize$ = this.store.select(selectPageSize);
   pageIndex$ = this.store.select(selectPageIndex);
+  availableGenres$ = this.store.select(selectAvailableGenres);
+  selectedGenre$ = this.store.select(selectSelectedGenre);
 
   ngOnInit() {
     this.store.dispatch(MoviesActions.loadShows());
@@ -165,6 +199,10 @@ export class HomeComponent implements OnInit {
 
   onSearchChange(query: string) {
     this.store.dispatch(MoviesActions.searchShows({ query }));
+  }
+
+  onGenreChange(genre: string | null) {
+    this.store.dispatch(MoviesActions.setGenreFilter({ genre }));
   }
 
   onPageChange(event: PageEvent) {

@@ -11,6 +11,7 @@ export interface MoviesState {
   pageSize: number;
   pageIndex: number;
   isDarkMode: boolean;
+  selectedGenre: string | null;
 }
 
 export const initialState: MoviesState = {
@@ -22,6 +23,7 @@ export const initialState: MoviesState = {
   pageSize: 20,
   pageIndex: 0,
   isDarkMode: true,
+  selectedGenre: null,
 };
 
 export const moviesReducer = createReducer(
@@ -47,6 +49,11 @@ export const moviesReducer = createReducer(
   on(MoviesActions.toggleTheme, (state) => ({
     ...state,
     isDarkMode: !state.isDarkMode,
+  })),
+  on(MoviesActions.setGenreFilter, (state, { genre }) => ({
+    ...state,
+    selectedGenre: genre,
+    pageIndex: 0,
   })),
 
   on(MoviesActions.addToFavorites, (state, { movie }) => {

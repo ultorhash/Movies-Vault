@@ -18,5 +18,6 @@ export const MoviesActions = createActionGroup({
         'Update Pagination': props<{ pageIndex: number; pageSize: number }>(),
 
         'Toggle Theme': emptyProps(),
+        'Set Genre Filter': props<{ genre: string | null }>(),
     },
 });
