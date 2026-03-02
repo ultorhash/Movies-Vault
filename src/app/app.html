@@ -6,17 +6,20 @@
     </div>
     <span class="spacer"></span>
     <div class="nav-links">
-      <button mat-button routerLink="/" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}">HOME</button>
-
-      <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle Light/Dark Mode">
-        <mat-icon>{{ (isDarkMode$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Home
       </button>
 
       <button mat-button routerLink="/favorites" routerLinkActive="active">
-        <mat-icon [matBadge]="favoritesCount$ | async" matBadgeColor="accent"
-          [matBadgeHidden]="(favoritesCount$ | async) === 0">favorite</mat-icon>
+        <mat-icon matBadgeColor="accent" [matBadge]="favoritesCount$ | async"
+          [matBadgeHidden]="(favoritesCount$ | async) === 0">
+          favorite
+        </mat-icon>
         <span>Favorites</span>
+      </button>
+
+      <button mat-icon-button matTooltip="Toggle Light/Dark Mode" (click)="toggleTheme()">
+        <mat-icon>{{ (isDarkMode$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
       </button>
     </div>
   </div>
