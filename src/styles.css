@@ -1,0 +1,122 @@
+/* Basic reset and dark theme */
+:root {
+  --bg-color: #0f172a;
+  --surface-color: #1e293b;
+  --primary-color: #6366f1;
+  --secondary-color: #ec4899;
+  --text-active: #fff;
+  --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-active);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Toolbar styling */
+.main-toolbar {
+  background: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 72px;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand mat-icon {
+  color: #6366f1;
+  -webkit-text-fill-color: initial;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-links button {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.nav-links button.active {
+  color: var(--text-active);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Global Grid and Containers */
+main {
+  min-height: calc(100vh - 72px);
+}
+
+/* Angular Material overrides for dark theme */
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-container-shape: 12px;
+  --mdc-outlined-text-field-outline-color: rgba(255, 255, 255, 0.2);
+  --mdc-outlined-text-field-hover-outline-color: rgba(255, 255, 255, 0.4);
+  --mdc-outlined-text-field-focus-outline-color: #6366f1;
+  --mdc-outlined-text-field-label-text-color: rgba(255, 255, 255, 0.6);
+  --mdc-outlined-text-field-focus-label-text-color: #6366f1;
+  --mdc-outlined-text-field-input-text-color: #fff;
+}
+
+.mat-mdc-button, .mat-mdc-raised-button {
+  border-radius: 8px !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-transition-container {
+  animation: fadeIn 0.5s ease-out;
+}

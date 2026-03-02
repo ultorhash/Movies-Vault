@@ -1,0 +1,111 @@
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { RouterLink } from '@angular/router';
+import { Movie } from '../../../core/models/movie.model';
+
+@Component({
+  selector: 'app-movie-card',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatChipsModule,
+    RouterLink
+  ],
+  templateUrl: './movie-card.html',
+  styles: [`
+    .movie-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .movie-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .card-image {
+      height: 380px;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    mat-card-header {
+      padding: 16px;
+    }
+
+    mat-card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #fff;
+    }
+
+    mat-card-content {
+      flex-grow: 1;
+      padding: 0 16px 16px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+      color: #ffd700;
+    }
+
+    mat-card-actions {
+      padding: 8px 16px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .favorite-btn.is-favorite {
+      color: #ff4081;
+    }
+
+    .genres-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    mat-chip {
+      --mat-chip-container-height: 24px;
+      font-size: 0.75rem;
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+    }
+  `]
+})
+export class MovieCardComponent {
+  @Input({ required: true }) movie!: Movie;
+  @Input() isFavorite = false;
+
+  @Output() toggleFavorite = new EventEmitter<Movie>();
+
+  onToggleFavorite(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.toggleFavorite.emit(this.movie);
+  }
+}
