@@ -1,5 +1,5 @@
-<div class="home-container">
-  <div class="search-header">
+<div class="hero-banner">
+  <div class="hero-content">
     <h1>Explore Movies & TV Shows</h1>
     <mat-form-field appearance="outline" class="search-field">
       <mat-label>Search for a movie...</mat-label>
@@ -7,15 +7,17 @@
         placeholder="Type to search..." />
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
+  </div>
+</div>
 
-    <div class="genre-filters" *ngIf="(availableGenres$ | async)?.length">
-      <mat-chip-listbox aria-label="Genre selection" [value]="selectedGenre$ | async"
-        (change)="onGenreChange($event.value)">
-        <mat-chip-option *ngFor="let genre of availableGenres$ | async" [value]="genre">
-          {{ genre }}
-        </mat-chip-option>
-      </mat-chip-listbox>
-    </div>
+<div class="home-container">
+  <div class="genre-filters" *ngIf="(availableGenres$ | async)?.length">
+    <mat-chip-listbox aria-label="Genre selection" [value]="selectedGenre$ | async"
+      (change)="onGenreChange($event.value)">
+      <mat-chip-option *ngFor="let genre of availableGenres$ | async" [value]="genre">
+        {{ genre }}
+      </mat-chip-option>
+    </mat-chip-listbox>
   </div>
 
   <div class="loading-spinner" *ngIf="loading$ | async">
