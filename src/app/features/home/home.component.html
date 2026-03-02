@@ -1,0 +1,42 @@
+<div class="home-container">
+  <div class="search-header">
+    <h1>Explore Movies & TV Shows</h1>
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search for a movie...</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)"
+        placeholder="Type to search..." />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="genre-filters" *ngIf="(availableGenres$ | async)?.length">
+      <mat-chip-listbox aria-label="Genre selection" [value]="selectedGenre$ | async"
+        (change)="onGenreChange($event.value)">
+        <mat-chip-option *ngFor="let genre of availableGenres$ | async" [value]="genre">
+          {{ genre }}
+        </mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading$ | async">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div class="results-area" *ngIf="!(loading$ | async)">
+    <div class="movies-grid">
+      <app-movie-card *ngFor="let movie of displayedMovies$ | async" [movie]="movie"
+        [isFavorite]="isMovieFavorite(movie.id)" (toggleFavorite)="onToggleFavorite($event)">
+      </app-movie-card>
+    </div>
+
+    <mat-paginator *ngIf="(totalItems$ | async)! > 0" [length]="totalItems$ | async" [pageSize]="pageSize$ | async"
+      [pageIndex]="pageIndex$ | async" [pageSizeOptions]="[10, 20, 40, 100]" (page)="onPageChange($event)"
+      class="custom-paginator">
+    </mat-paginator>
+  </div>
+
+  <div class="no-results" *ngIf="!(loading$ | async) && (totalItems$ | async) === 0">
+    <mat-icon>search_off</mat-icon>
+    <p>No results found. Try another search or different genre!</p>
+  </div>
+</div>
