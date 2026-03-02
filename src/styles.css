@@ -1,4 +1,4 @@
-/* Base and Default (Dark) Theme Variables */
+/* Base and Default Theme Variables */
 :root {
   --bg-color: #0f172a;
   --surface-color: #1e293b;
@@ -29,7 +29,6 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Toolbar styling */
 .main-toolbar {
   background: var(--bg-color) !important;
   opacity: 0.95;
@@ -59,6 +58,7 @@ body {
   letter-spacing: 2px;
   cursor: pointer;
   background: linear-gradient(45deg, #6366f1, #a855f7);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -89,12 +89,10 @@ body {
   background: rgba(128, 128, 128, 0.1);
 }
 
-/* Global Grid and Containers */
 main {
   min-height: calc(100vh - 72px);
 }
 
-/* Angular Material overrides */
 .mat-mdc-form-field {
   --mdc-outlined-text-field-container-shape: 12px;
   --mdc-outlined-text-field-outline-color: var(--border-color);
@@ -110,7 +108,6 @@ main {
   border-radius: 8px !important;
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -129,7 +126,6 @@ main {
   background: var(--text-muted);
 }
 
-/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -146,7 +142,6 @@ main {
   animation: fadeIn 0.5s ease-out;
 }
 
-/* Movie Card Premium Adjustments */
 .movie-card {
   background: var(--card-bg) !important;
   border: 1px solid var(--border-color) !important;
@@ -161,14 +156,13 @@ main {
   color: var(--text-muted) !important;
 }
 
-/* Home Header gradient visibility */
 h1 {
   background: linear-gradient(45deg, var(--text-active), var(--text-muted));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Paginator Fixes */
 .custom-paginator {
   background: var(--card-bg) !important;
   color: var(--text-active) !important;
