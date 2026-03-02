@@ -19,7 +19,7 @@ export const initialState: MoviesState = {
   favorites: [],
   loading: false,
   error: null,
-  pageSize: 20, // Default to 5 rows (assuming ~4-5 items per row)
+  pageSize: 20,
   pageIndex: 0,
   isDarkMode: true,
 };
