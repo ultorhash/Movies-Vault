@@ -6,8 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { Store } from '@ngrx/store';
-import { selectFavorites } from './store/movies.selectors';
-import { map } from 'rxjs';
+import { selectFavorites, selectIsDarkMode } from './store/movies.selectors';
+import { MoviesActions } from './store/movies.actions';
+import { map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -29,4 +30,17 @@ export class AppComponent {
   private store = inject(Store);
 
   favoritesCount$ = this.store.select(selectFavorites).pipe(map((favs) => favs.length));
+  isDarkMode$ = this.store.select(selectIsDarkMode).pipe(
+    tap((isDark) => {
+      if (isDark) {
+        document.body.classList.remove('light-theme');
+      } else {
+        document.body.classList.add('light-theme');
+      }
+    })
+  );
+
+  toggleTheme() {
+    this.store.dispatch(MoviesActions.toggleTheme());
+  }
 }

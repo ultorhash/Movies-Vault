@@ -4,18 +4,20 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
 import { MoviesActions } from '../../store/movies.actions';
 import {
-  selectAllShows,
-  selectSearchResults,
   selectIsLoading,
   selectFavorites,
+  selectPaginatedMovies,
+  selectTotalItems,
+  selectPageSize,
+  selectPageIndex,
 } from '../../store/movies.selectors';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
 import { Movie } from '../../core/models/movie.model';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +28,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
     MatFormFieldModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     FormsModule,
     MovieCardComponent,
   ],
@@ -49,19 +52,32 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
         <mat-spinner diameter="50"></mat-spinner>
       </div>
 
-      <div class="movies-grid" *ngIf="!(loading$ | async)">
-        <app-movie-card
-          *ngFor="let movie of displayedMovies$ | async"
-          [movie]="movie"
-          [isFavorite]="isMovieFavorite(movie.id)"
-          (toggleFavorite)="onToggleFavorite($event)"
+      <div class="results-area" *ngIf="!(loading$ | async)">
+        <div class="movies-grid">
+          <app-movie-card
+            *ngFor="let movie of displayedMovies$ | async"
+            [movie]="movie"
+            [isFavorite]="isMovieFavorite(movie.id)"
+            (toggleFavorite)="onToggleFavorite($event)"
+          >
+          </app-movie-card>
+        </div>
+
+        <mat-paginator
+          *ngIf="(totalItems$ | async)! > 0"
+          [length]="totalItems$ | async"
+          [pageSize]="pageSize$ | async"
+          [pageIndex]="pageIndex$ | async"
+          [pageSizeOptions]="[10, 20, 40, 100]"
+          (page)="onPageChange($event)"
+          class="custom-paginator"
         >
-        </app-movie-card>
+        </mat-paginator>
       </div>
 
       <div
         class="no-results"
-        *ngIf="!(loading$ | async) && (displayedMovies$ | async)?.length === 0"
+        *ngIf="!(loading$ | async) && (totalItems$ | async) === 0"
       >
         <mat-icon>search_off</mat-icon>
         <p>No results found. Try another search!</p>
@@ -99,6 +115,14 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .custom-paginator {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-radius: 12px;
+        color: #fff !important;
+        margin-top: 2rem;
       }
 
       .loading-spinner {
@@ -129,19 +153,28 @@ export class HomeComponent implements OnInit {
   loading$ = this.store.select(selectIsLoading);
   favorites: Movie[] = [];
 
-  // Combine shows and search results logic
-  displayedMovies$ = this.store.select((state) => {
-    const results = selectSearchResults(state);
-    return results.length > 0 ? results : selectAllShows(state);
-  });
+  displayedMovies$ = this.store.select(selectPaginatedMovies);
+  totalItems$ = this.store.select(selectTotalItems);
+  pageSize$ = this.store.select(selectPageSize);
+  pageIndex$ = this.store.select(selectPageIndex);
 
   ngOnInit() {
     this.store.dispatch(MoviesActions.loadShows());
-    this.store.select(selectFavorites).subscribe((favs) => (this.favorites = favs));
+    this.store.select(selectFavorites).subscribe((favs: Movie[]) => (this.favorites = favs));
   }
 
   onSearchChange(query: string) {
     this.store.dispatch(MoviesActions.searchShows({ query }));
+  }
+
+  onPageChange(event: PageEvent) {
+    this.store.dispatch(
+      MoviesActions.updatePagination({
+        pageIndex: event.pageIndex,
+        pageSize: event.pageSize,
+      })
+    );
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   isMovieFavorite(id: number): boolean {

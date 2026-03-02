@@ -6,21 +6,17 @@
     </div>
     <span class="spacer"></span>
     <div class="nav-links">
-      <button
-        mat-button
-        routerLink="/"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        HOME
+      <button mat-button routerLink="/" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">HOME</button>
+
+      <!-- Theme Toggle Button -->
+      <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle Light/Dark Mode">
+        <mat-icon>{{ (isDarkMode$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
       </button>
+
       <button mat-button routerLink="/favorites" routerLinkActive="active">
-        <mat-icon
-          [matBadge]="favoritesCount$ | async"
-          matBadgeColor="accent"
-          [matBadgeHidden]="(favoritesCount$ | async) === 0"
-          >favorite</mat-icon
-        >
+        <mat-icon [matBadge]="favoritesCount$ | async" matBadgeColor="accent"
+          [matBadgeHidden]="(favoritesCount$ | async) === 0">favorite</mat-icon>
         <span>FAVORITES</span>
       </button>
     </div>
@@ -28,7 +24,7 @@
 </mat-toolbar>
 
 <main>
-  <div class="page-transition-container">
+  <div class="page-transition-container" *ngIf="{ isDark: isDarkMode$ | async } as theme">
     <router-outlet></router-outlet>
   </div>
 </main>
