@@ -89,7 +89,8 @@ main {
   --mdc-outlined-text-field-input-text-color: #fff;
 }
 
-.mat-mdc-button, .mat-mdc-raised-button {
+.mat-mdc-button,
+.mat-mdc-raised-button {
   border-radius: 8px !important;
 }
 
@@ -113,8 +114,14 @@ main {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .page-transition-container {

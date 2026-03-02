@@ -20,15 +20,13 @@ import { map } from 'rxjs';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatBadgeModule
+    MatBadgeModule,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class AppComponent {
   private store = inject(Store);
 
-  favoritesCount$ = this.store.select(selectFavorites).pipe(
-    map(favs => favs.length)
-  );
+  favoritesCount$ = this.store.select(selectFavorites).pipe(map((favs) => favs.length));
 }

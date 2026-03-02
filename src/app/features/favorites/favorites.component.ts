@@ -10,22 +10,25 @@ import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'app-favorites',
-    standalone: true,
-    imports: [CommonModule, MovieCardComponent, MatIconModule, RouterLink, MatButtonModule],
-    template: `
+  selector: 'app-favorites',
+  standalone: true,
+  imports: [CommonModule, MovieCardComponent, MatIconModule, RouterLink, MatButtonModule],
+  template: `
     <div class="favorites-container">
       <div class="header">
         <h1>Your Favorites</h1>
-        <p *ngIf="(favorites$ | async)?.length === 0">You haven't added any movies to your favorites yet.</p>
+        <p *ngIf="(favorites$ | async)?.length === 0">
+          You haven't added any movies to your favorites yet.
+        </p>
       </div>
 
       <div class="movies-grid" *ngIf="(favorites$ | async)?.length! > 0">
-        <app-movie-card 
-          *ngFor="let movie of favorites$ | async" 
+        <app-movie-card
+          *ngFor="let movie of favorites$ | async"
           [movie]="movie"
           [isFavorite]="true"
-          (toggleFavorite)="onRemoveFavorite($event)">
+          (toggleFavorite)="onRemoveFavorite($event)"
+        >
         </app-movie-card>
       </div>
 
@@ -35,53 +38,55 @@ import { MatButtonModule } from '@angular/material/button';
       </div>
     </div>
   `,
-    styles: [`
-    .favorites-container {
-      padding: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+  styles: [
+    `
+      .favorites-container {
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
 
-    .header {
-      margin-bottom: 3rem;
-      text-align: center;
-    }
+      .header {
+        margin-bottom: 3rem;
+        text-align: center;
+      }
 
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(45deg, #ff4081, #ff80ab);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, #ff4081, #ff80ab);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
 
-    .movies-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 2rem;
-    }
+      .movies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+      }
 
-    .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      padding: 4rem;
-      color: rgba(255, 255, 255, 0.3);
-    }
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 4rem;
+        color: rgba(255, 255, 255, 0.3);
+      }
 
-    .empty-state mat-icon {
-      font-size: 6rem;
-      width: 6rem;
-      height: 6rem;
-    }
-  `]
+      .empty-state mat-icon {
+        font-size: 6rem;
+        width: 6rem;
+        height: 6rem;
+      }
+    `,
+  ],
 })
 export class FavoritesComponent {
-    private store = inject(Store);
-    favorites$ = this.store.select(selectFavorites);
+  private store = inject(Store);
+  favorites$ = this.store.select(selectFavorites);
 
-    onRemoveFavorite(movie: Movie) {
-        this.store.dispatch(MoviesActions.removeFromFavorites({ movieId: movie.id }));
-    }
+  onRemoveFavorite(movie: Movie) {
+    this.store.dispatch(MoviesActions.removeFromFavorites({ movieId: movie.id }));
+  }
 }

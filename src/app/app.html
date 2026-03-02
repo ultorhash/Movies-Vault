@@ -6,11 +6,21 @@
     </div>
     <span class="spacer"></span>
     <div class="nav-links">
-      <button mat-button routerLink="/" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}">HOME</button>
+      <button
+        mat-button
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        HOME
+      </button>
       <button mat-button routerLink="/favorites" routerLinkActive="active">
-        <mat-icon [matBadge]="favoritesCount$ | async" matBadgeColor="accent"
-          [matBadgeHidden]="(favoritesCount$ | async) === 0">favorite</mat-icon>
+        <mat-icon
+          [matBadge]="favoritesCount$ | async"
+          matBadgeColor="accent"
+          [matBadgeHidden]="(favoritesCount$ | async) === 0"
+          >favorite</mat-icon
+        >
         <span>FAVORITES</span>
       </button>
     </div>

@@ -2,17 +2,17 @@ import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Movie } from '../core/models/movie.model';
 
 export const MoviesActions = createActionGroup({
-    source: 'Movies API',
-    events: {
-        'Load Shows': emptyProps(),
-        'Load Shows Success': props<{ shows: Movie[] }>(),
-        'Load Shows Failure': props<{ error: string }>(),
+  source: 'Movies API',
+  events: {
+    'Load Shows': emptyProps(),
+    'Load Shows Success': props<{ shows: Movie[] }>(),
+    'Load Shows Failure': props<{ error: string }>(),
 
-        'Search Shows': props<{ query: string }>(),
-        'Search Shows Success': props<{ shows: Movie[] }>(),
-        'Search Shows Failure': props<{ error: string }>(),
+    'Search Shows': props<{ query: string }>(),
+    'Search Shows Success': props<{ shows: Movie[] }>(),
+    'Search Shows Failure': props<{ error: string }>(),
 
-        'Add To Favorites': props<{ movie: Movie }>(),
-        'Remove From Favorites': props<{ movieId: number }>(),
-    }
+    'Add To Favorites': props<{ movie: Movie }>(),
+    'Remove From Favorites': props<{ movieId: number }>(),
+  },
 });

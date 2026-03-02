@@ -4,8 +4,8 @@ import { MovieDetailComponent } from './features/movie-detail/movie-detail.compo
 import { FavoritesComponent } from './features/favorites/favorites.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'movie/:id', component: MovieDetailComponent },
-    { path: 'favorites', component: FavoritesComponent },
-    { path: '**', redirectTo: '' }
+  { path: '', component: HomeComponent },
+  { path: 'movie/:id', component: MovieDetailComponent },
+  { path: 'favorites', component: FavoritesComponent },
+  { path: '**', redirectTo: '' },
 ];

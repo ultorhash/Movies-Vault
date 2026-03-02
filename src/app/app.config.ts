@@ -13,6 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideStore({ movies: moviesReducer }),
-    provideEffects(MoviesEffects)
+    provideEffects(MoviesEffects),
   ],
 };
