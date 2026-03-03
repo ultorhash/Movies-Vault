@@ -1,0 +1,19 @@
+<div class="favorites-container">
+  <div class="header">
+    <h1>Your Favorites</h1>
+    <p *ngIf="(favorites$ | async)?.length === 0">
+      You haven't added any movies to your favorites yet.
+    </p>
+  </div>
+
+  <div class="movies-grid" *ngIf="(favorites$ | async)?.length! > 0">
+    <app-movie-card *ngFor="let movie of favorites$ | async" [movie]="movie" [isFavorite]="true"
+      (toggleFavorite)="onRemoveFavorite($event)">
+    </app-movie-card>
+  </div>
+
+  <div class="empty-state" *ngIf="(favorites$ | async)?.length === 0">
+    <mat-icon>favorite_border</mat-icon>
+    <button mat-raised-button color="primary" routerLink="/">EXPLORE MOVIES</button>
+  </div>
+</div>
