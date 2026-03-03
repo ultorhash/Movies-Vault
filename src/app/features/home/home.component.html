@@ -2,7 +2,6 @@
   <div class="hero-content">
     <h1>Explore Movies & TV Shows</h1>
     <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Search for a movie...</mat-label>
       <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)"
         placeholder="Type to search..." />
       <mat-icon matSuffix>search</mat-icon>
