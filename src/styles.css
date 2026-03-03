@@ -176,7 +176,7 @@ h1 {
 }
 
 .custom-paginator {
-  background: var(--card-bg) !important;
+  background: transparent !important;
   color: var(--text-active) !important;
-  border: 1px solid var(--border-color) !important;
+  border: none !important;
 }

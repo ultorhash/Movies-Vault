@@ -7,6 +7,14 @@ import { routes } from './app.routes';
 import { moviesReducer } from './store/movies.reducer';
 import { MoviesEffects } from './store/movies.effects';
 
+import { MatPaginatorIntl } from '@angular/material/paginator';
+
+function getCustomPaginatorIntl() {
+  const customIntl = new MatPaginatorIntl();
+  customIntl.itemsPerPageLabel = 'Movies per page';
+  return customIntl;
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -14,5 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideStore({ movies: moviesReducer }),
     provideEffects(MoviesEffects),
+    { provide: MatPaginatorIntl, useFactory: getCustomPaginatorIntl },
   ],
 };

@@ -41,7 +41,7 @@ import { MatButtonModule } from '@angular/material/button';
   styles: [
     `
       .favorites-container {
-        padding: 2rem;
+        padding: 100px 2rem 2rem;
         max-width: 1400px;
         margin: 0 auto;
       }
@@ -53,10 +53,12 @@ import { MatButtonModule } from '@angular/material/button';
 
       h1 {
         font-size: 2.5rem;
-        font-weight: 700;
-        background: linear-gradient(45deg, #ff4081, #ff80ab);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: var(--text-active);
+        line-height: 1.2;
+        -webkit-text-fill-color: initial;
+        background: none;
       }
 
       .movies-grid {

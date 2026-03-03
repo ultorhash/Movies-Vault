@@ -107,11 +107,11 @@ h1 {
 }
 
 .custom-paginator {
-  background: var(--card-bg) !important;
+  background: transparent !important;
   border-radius: 16px;
   color: var(--text-active) !important;
   margin-top: 2rem;
-  border: 1px solid var(--border-color);
+  border: none !important;
 }
 
 .loading-spinner {
