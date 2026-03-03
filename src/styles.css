@@ -7,15 +7,19 @@
   --text-muted: rgba(255, 255, 255, 0.6);
   --border-color: rgba(255, 255, 255, 0.1);
   --card-bg: rgba(255, 255, 255, 0.05);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.3);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.5);
 }
 
 body.light-theme {
   --bg-color: #f8fafc;
   --surface-color: #ffffff;
   --text-active: #0f172a;
-  --text-muted: #64748b;
+  --text-muted: #475569;
   --border-color: rgba(0, 0, 0, 0.1);
   --card-bg: #ffffff;
+  --scrollbar-thumb: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -36,7 +40,7 @@ body {
   z-index: 1000;
   height: 80px;
   border-bottom: none !important;
-  color: #fff !important;
+  color: var(--text-active) !important;
 }
 
 .nav-container {
@@ -55,15 +59,11 @@ body {
   font-weight: 800;
   letter-spacing: 2px;
   cursor: pointer;
-  background: linear-gradient(45deg, #6366f1, #a855f7);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-active);
 }
 
 .brand mat-icon {
-  color: #6366f1;
-  -webkit-text-fill-color: initial;
+  color: var(--primary-color);
 }
 
 .spacer {
@@ -76,15 +76,29 @@ body {
   align-items: center;
 }
 
-.nav-links button {
+.nav-links button,
+.nav-links .mat-mdc-button,
+.nav-links .mat-mdc-icon-button {
   font-weight: 500;
   letter-spacing: 0.5px;
-  color: var(--text-muted);
+  color: var(--text-muted) !important;
 }
 
-.nav-links button.active {
-  color: var(--text-active);
+.nav-links button mat-icon,
+.nav-links .mat-mdc-button mat-icon,
+.nav-links .mat-mdc-icon-button mat-icon {
+  color: inherit !important;
+}
+
+.nav-links button.active,
+.nav-links .mat-mdc-button.active {
+  color: var(--text-active) !important;
   background: rgba(128, 128, 128, 0.1);
+}
+
+/* Ensure the theme toggle is always clearly visible */
+.nav-links .mat-mdc-icon-button {
+  color: var(--text-active) !important;
 }
 
 main {
@@ -115,13 +129,13 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--surface-color);
+  background: var(--scrollbar-thumb);
   border-radius: 5px;
   border: 2px solid var(--bg-color);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--scrollbar-thumb-hover);
 }
 
 @keyframes fadeIn {
@@ -164,5 +178,5 @@ h1 {
 .custom-paginator {
   background: var(--card-bg) !important;
   color: var(--text-active) !important;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color) !important;
 }

@@ -107,9 +107,9 @@ h1 {
 }
 
 .custom-paginator {
-  background: rgba(255, 255, 255, 0.03) !important;
+  background: var(--card-bg) !important;
   border-radius: 16px;
-  color: #fff !important;
+  color: var(--text-active) !important;
   margin-top: 2rem;
   border: 1px solid var(--border-color);
 }
