@@ -1,0 +1,52 @@
+<div class="detail-container" *ngIf="movie$ | async as movie; else loading">
+  <div class="backdrop" [style.backgroundImage]="'url(' + movie.image?.original + ')'"></div>
+
+  <div class="content">
+    <div class="poster-side">
+      <img [src]="movie.image?.medium" [alt]="movie.name" class="main-poster" />
+      <button mat-raised-button color="primary" class="fav-btn" (click)="toggleFavorite(movie)">
+        <mat-icon>{{ isFavorite(movie.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        {{ isFavorite(movie.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
+      </button>
+    </div>
+
+    <div class="info-side">
+      <div class="header">
+        <button mat-icon-button routerLink="/" class="back-btn">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>{{ movie.name }}</h1>
+      </div>
+
+      <div class="meta">
+        <span class="rating" *ngIf="movie.rating.average">
+          <mat-icon>star</mat-icon> {{ movie.rating.average }}
+        </span>
+        <span class="dot"></span>
+        <span>{{ movie.premiered | date: 'yyyy' }}</span>
+        <span class="dot"></span>
+        <span>{{ movie.runtime }} min</span>
+      </div>
+
+      <div class="genres">
+        <mat-chip *ngFor="let genre of movie.genres">{{ genre }}</mat-chip>
+      </div>
+
+      <div class="summary" [innerHTML]="movie.summary"></div>
+
+      <div class="additional-info">
+        <div class="info-item"><strong>Status:</strong> {{ movie.status }}</div>
+        <div class="info-item"><strong>Language:</strong> {{ movie.language }}</div>
+        <div class="info-item" *ngIf="movie.network">
+          <strong>Network:</strong> {{ movie.network.name }} ({{ movie.network.country.code }})
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
