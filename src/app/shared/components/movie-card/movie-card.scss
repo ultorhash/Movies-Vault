@@ -30,11 +30,16 @@ mat-card-header {
 
 mat-card-title {
   font-size: 1.1rem;
-  font-weight: 600;
-  white-space: nowrap;
+  font-weight: 700;
+  color: var(--text-active);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #fff;
 }
 
 mat-card-content {

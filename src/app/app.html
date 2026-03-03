@@ -1,11 +1,19 @@
-<mat-toolbar color="primary" class="main-toolbar">
+<mat-toolbar color="primary" class="main-toolbar" [class.toolbar-hidden]="isHeaderHidden" [class.scrolled]="isScrolled">
   <div class="nav-container">
     <div class="brand" routerLink="/">
       <mat-icon>movie</mat-icon>
       <span>Movies Vault</span>
     </div>
+
     <span class="spacer"></span>
-    <div class="nav-links">
+
+    <!-- Mobile Menu Button -->
+    <button mat-icon-button [matMenuTriggerFor]="mobileMenu" class="mobile-only">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Desktop Navigation -->
+    <div class="nav-links desktop-only">
       <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         Home
       </button>
@@ -24,6 +32,24 @@
     </div>
   </div>
 </mat-toolbar>
+
+<mat-menu #mobileMenu="matMenu" class="mobile-nav-panel">
+  <button mat-menu-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>home</mat-icon>
+    <span>Home</span>
+  </button>
+  <button mat-menu-item routerLink="/favorites" routerLinkActive="active">
+    <mat-icon matBadgeColor="accent" [matBadge]="favoritesCount$ | async"
+      [matBadgeHidden]="(favoritesCount$ | async) === 0">
+      favorite
+    </mat-icon>
+    <span>Favorites</span>
+  </button>
+  <button mat-menu-item (click)="toggleTheme()">
+    <mat-icon>{{ (isDarkMode$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    <span>{{ (isDarkMode$ | async) ? 'Light Mode' : 'Dark Mode' }}</span>
+  </button>
+</mat-menu>
 
 <main>
   <div class="page-transition-container" *ngIf="{ isDark: isDarkMode$ | async } as theme">

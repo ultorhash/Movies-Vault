@@ -30,9 +30,9 @@ import { Observable, map, switchMap, tap } from 'rxjs';
       <div class="content">
         <div class="poster-side">
           <img [src]="movie.image?.medium" [alt]="movie.name" class="main-poster" />
-          <button mat-raised-button color="accent" class="fav-btn" (click)="toggleFavorite(movie)">
+          <button mat-raised-button color="primary" class="fav-btn" (click)="toggleFavorite(movie)">
             <mat-icon>{{ isFavorite(movie.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
-            {{ isFavorite(movie.id) ? 'REMOVE FROM FAVORITES' : 'ADD TO FAVORITES' }}
+            {{ isFavorite(movie.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
           </button>
         </div>
 
@@ -121,7 +121,23 @@ import { Observable, map, switchMap, tap } from 'rxjs';
 
       .fav-btn {
         width: 100%;
-        height: 48px;
+        height: 54px !important;
+        border-radius: 12px !important;
+        background: var(--primary-color) !important;
+        color: #fff !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.5px;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2) !important;
+        transition: all 0.3s ease !important;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3) !important;
+        }
+
+        mat-icon {
+          margin-right: 8px;
+        }
       }
 
       .info-side {
@@ -144,6 +160,9 @@ import { Observable, map, switchMap, tap } from 'rxjs';
         font-size: 3rem;
         margin: 0;
         font-weight: 800;
+        letter-spacing: -1px;
+        color: var(--text-active);
+        line-height: 1.1;
       }
 
       .meta {

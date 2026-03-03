@@ -180,3 +180,46 @@ h1 {
   color: var(--text-active) !important;
   border: none !important;
 }
+
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: inline-flex !important;
+  }
+
+  .nav-container {
+    padding: 0 1rem !important;
+  }
+
+  .brand span {
+    font-size: 1.2rem;
+  }
+}
+
+.mobile-nav-panel {
+  background: var(--surface-color) !important;
+  border: 1px solid var(--border-color);
+
+  .mat-mdc-menu-item {
+    color: var(--text-active) !important;
+
+    mat-icon {
+      color: var(--text-muted);
+    }
+
+    &.active {
+      color: var(--primary-color) !important;
+
+      mat-icon {
+        color: var(--primary-color) !important;
+      }
+    }
+  }
+}

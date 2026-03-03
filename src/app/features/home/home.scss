@@ -237,4 +237,13 @@ h1 {
   .hero-banner {
     height: 350px;
   }
+
+  .movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .home-container {
+    padding: 0 1rem 2rem;
+  }
 }
